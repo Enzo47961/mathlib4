@@ -24,13 +24,14 @@ permissions:
 
 jobs:
   prep:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04   # fixado (D-55): ubuntu-latest migra para Ubuntu 26 desde 2026-10-19
     timeout-minutes: 90
     steps:
       - name: checkout do fork (auditor-base)
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           persist-credentials: false
+          fetch-depth: 20   # e1b2403b (alguns commits abaixo) precisa estar presente: gen_tcb_roots --check em fork (D-54)
 
       - name: checkout do auditor (ref fixada)
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
@@ -75,7 +76,7 @@ jobs:
           tail -30 "$RUNNER_TEMP/prep/gen-allowlist.log"
           if [ -f .auditor/allowlist.json ]; then
             cp -r .auditor "$RUNNER_TEMP/prep/dot-auditor"
-            python -c "import json;d=json.load(open('.auditor/allowlist.json'));print('unclassified:',d.get('unclassified'))" | tee "$RUNNER_TEMP/prep/unclassified.txt"
+            python -c "import json;d=json.load(open('.auditor/allowlist.json'));print('libraries:',d.get('libraries'));print('module_count:',d.get('module_count'));print('unclassified:',d.get('unclassified'))" | tee "$RUNNER_TEMP/prep/unclassified.txt"
           fi
 
       - name: target_trusted_roots --check (passo 3)
