@@ -97,8 +97,12 @@ jobs:
             --started-at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --summary "$GITHUB_STEP_SUMMARY" || rc=$?
           echo "exit=$rc" | tee "$RUNNER_TEMP/prep/smoke-exit.txt"
           python -c "import json;o=json.load(open('$RUNNER_TEMP/prep/smoke/outcome.json'));print({k:o[k] for k in ('cache_state','first_run','infra_failed','exit_code')})" | tee -a "$RUNNER_TEMP/prep/smoke-exit.txt" || true
-          grep -rlE "allowlist_unavailable|toolchain_mismatch|inspector_build_failed|sysroot_mismatch|search_path_unrecognized|tcb_boundary_undeclared|unknown_command" "$RUNNER_TEMP/prep/smoke/" \
-            | tee -a "$RUNNER_TEMP/prep/smoke-exit.txt" || echo "nenhum sinal de ambiente" | tee -a "$RUNNER_TEMP/prep/smoke-exit.txt"
+          # o `||` precisa decidir pelo grep, não pelo tee (que sempre sai com 0)
+          if signals=$(grep -rlE "allowlist_unavailable|toolchain_mismatch|inspector_build_failed|sysroot_mismatch|search_path_unrecognized|tcb_boundary_undeclared|unknown_command" "$RUNNER_TEMP/prep/smoke/"); then
+            echo "$signals" | tee -a "$RUNNER_TEMP/prep/smoke-exit.txt"
+          else
+            echo "nenhum sinal de ambiente" | tee -a "$RUNNER_TEMP/prep/smoke-exit.txt"
+          fi
 
       - name: artefato
         if: always()

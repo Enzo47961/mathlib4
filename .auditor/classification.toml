@@ -8,10 +8,14 @@
 #      São CORREÇÕES, não discordâncias: a lista prévia foi feita pelo nome; esta, pela leitura.
 #   2. Segunda revisão: feita pelo AUTOR do rascunho (Claude), por decisão do mantenedor, depois de
 #      uma revisão externa não identificada cujas citações de linha não batiam com o commit fixado.
-#      DESVIO do checklist (passo 3 exige revisor que não seja o autor); registrado em
-#      docs/proposed-improvements.md do auditor. Decisões: #lint, #string_diagram e
+#      DESVIO do checklist (passo 3 exige revisor que não seja o autor), aceito pelo primeiro
+#      revisor como decisão final; L-26. Decisões: #lint, #string_diagram e
 #      unsuppress_compilation → fail-closed; unset_option → allowed.
 classification_version = "mathlib-e1b2403b-1"
+# Declaração de revisão (obrigatória; L-26; repetida em tcb.classification_review_status):
+reviewed_by = "author-self-review"
+reviewer_independence = "none"
+revision_note = "Revisão externa descartada por falta de identificação e citações de linha divergentes do commit fixado. Segunda revisão feita pelo autor do rascunho por decisão do mantenedor."
 
 allowed = [
   # Nota de adaptação (comentário estruturado); não executa código.
