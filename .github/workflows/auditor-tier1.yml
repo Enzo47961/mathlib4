@@ -1,5 +1,5 @@
 # Modelo para o REPOSITÓRIO-ALVO (ex.: fork do Mathlib): .github/workflows/auditor-tier1.yml
-# Substitua Enzo47961/auditor e c3dcf08e261cd4f2e0bb8e6c7d01b28ca6951245 (commit fixado do auditor). Ver docs/ci.md.
+# Substitua Enzo47961/auditor e 65688355c0112bb57b63e2439e177a25e3978e7c (commit fixado do auditor). Ver docs/ci.md.
 # Orçamento (instrução 11): 300 s de wall-clock do PR no steady-state, incluindo cache get;
 # 900 s com cache cold (first run); 90 s por arquivo. Os padrões estão no workflow reutilizável.
 name: auditor-tier1
@@ -14,8 +14,8 @@ permissions:
 
 jobs:
   audit:
-    uses: Enzo47961/auditor/.github/workflows/auditor-tier1.yml@c3dcf08e261cd4f2e0bb8e6c7d01b28ca6951245
+    uses: Enzo47961/auditor/.github/workflows/auditor-tier1.yml@65688355c0112bb57b63e2439e177a25e3978e7c
     with:
       auditor-repository: Enzo47961/auditor
-      auditor-ref: c3dcf08e261cd4f2e0bb8e6c7d01b28ca6951245
+      auditor-ref: 65688355c0112bb57b63e2439e177a25e3978e7c
       cache-get: true

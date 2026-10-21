@@ -29,7 +29,7 @@ jobs:
           python-version: "3.12"
 
       - name: instalar o auditor (ref fixada; código confiável)
-        run: python -m pip install "git+https://github.com/Enzo47961/auditor@c3dcf08e261cd4f2e0bb8e6c7d01b28ca6951245"
+        run: python -m pip install "git+https://github.com/Enzo47961/auditor@65688355c0112bb57b63e2439e177a25e3978e7c"
 
       - name: publicar o sumário pedido
         env:
