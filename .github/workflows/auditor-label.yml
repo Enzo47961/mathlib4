@@ -44,7 +44,7 @@ jobs:
           python-version: "3.12"
 
       - name: instalar o auditor (ref fixada; código confiável)
-        run: python -m pip install "git+https://github.com/Enzo47961/auditor@7ba9b6f952924d8f133dcdcb2159a221f3da83ce"
+        run: python -m pip install "git+https://github.com/Enzo47961/auditor@69ed9cfd1bf6016358d799d31113d5555cc71763"
 
       - name: decidir
         id: decide
