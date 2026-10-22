@@ -277,3 +277,5 @@ protected def Nonempty (s : Set α) : Prop :=
   ∃ x, x ∈ s
 
 end Set
+
+theorem auditor_probe_fanout_failclosed : (2 : Nat) + 2 = 4 := rfl
