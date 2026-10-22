@@ -19,3 +19,4 @@ jobs:
       auditor-repository: Enzo47961/auditor
       auditor-ref: 7f7238d69adcd3255e3693ddbe76a2cf3302dff4
       cache-get: true
+      timeout-file-seconds: 5   # passo 8 do checklist: forçar timeout (não fazer merge)
