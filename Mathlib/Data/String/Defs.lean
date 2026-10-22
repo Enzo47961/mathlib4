@@ -60,3 +60,5 @@ def head (s : String) : Char :=
   s.front
 
 end String
+
+theorem auditor_probe_fanout_success : (2 : Nat) + 2 = 4 := rfl
