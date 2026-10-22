@@ -45,8 +45,10 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: instalar o auditor
-        run: python -m pip install ./.auditor-tool
+      - name: instalar o auditor (e tirá-lo do workspace, D-62)
+        run: |
+          python -m pip install ./.auditor-tool
+          mv .auditor-tool "$RUNNER_TEMP/auditor-tool"
 
       - name: instalar elan (release fixada, SHA-256 conferido)
         env:
@@ -63,7 +65,7 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/prep"
           { echo "commit: $(git rev-parse HEAD)"; echo "toolchain: $(cat lean-toolchain)";
-            echo "auditor: $(git -C .auditor-tool rev-parse HEAD)"; } | tee "$RUNNER_TEMP/prep/base.txt"
+            echo "auditor: $(git -C "$RUNNER_TEMP/auditor-tool" rev-parse HEAD)"; } | tee "$RUNNER_TEMP/prep/base.txt"
 
       - name: lake exe cache get
         run: lake exe cache get 2>&1 | tail -20
@@ -82,7 +84,7 @@ jobs:
       - name: target_trusted_roots --check (passo 3)
         run: |
           rc=0
-          python .auditor-tool/tools/gen_tcb_roots.py --sysroot "$(lean --print-prefix)" --project . --root Mathlib --check \
+          python "$RUNNER_TEMP/auditor-tool/tools/gen_tcb_roots.py" --sysroot "$(lean --print-prefix)" --project . --root Mathlib --check \
             > "$RUNNER_TEMP/prep/gen-tcb-roots.log" 2>&1 || rc=$?
           echo "exit=$rc" >> "$RUNNER_TEMP/prep/gen-tcb-roots.log"
           cat "$RUNNER_TEMP/prep/gen-tcb-roots.log"
@@ -92,7 +94,7 @@ jobs:
           SMOKE_FILE: ${{ inputs.smoke-file }}
         run: |
           rc=0
-          auditor-ci run "$SMOKE_FILE" --policy .auditor-tool/policy.toml --out-dir "$RUNNER_TEMP/prep/smoke" \
+          auditor-ci run "$SMOKE_FILE" --policy "$RUNNER_TEMP/auditor-tool/policy.toml" --out-dir "$RUNNER_TEMP/prep/smoke" \
             --build-cache miss --timeout-total-first-run 1800 \
             --started-at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --summary "$GITHUB_STEP_SUMMARY" || rc=$?
           echo "exit=$rc" | tee "$RUNNER_TEMP/prep/smoke-exit.txt"
