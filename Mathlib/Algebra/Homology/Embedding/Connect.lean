@@ -251,3 +251,5 @@ lemma homologyMap_map_of_eq_neg_succ (n : ℕ) [NeZero n] (m : ℤ) (hmn : m = -
 end ConnectData
 
 end CochainComplex
+
+theorem auditor_probe_medio : (2 : Nat) + 2 = 4 := rfl
